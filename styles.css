@@ -7,6 +7,10 @@
   width: 30rem;
 }
 
+.status-image {
+  width: 3rem;
+}
+
 .nav-item {
   margin: 0 2rem;
 }
@@ -14,4 +18,7 @@
 /* Generic styles */
 .align-center {
   text-align: center;
+}
+.align-right {
+  text-align: right;
 }

@@ -25,7 +25,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <!-- Test Results -->
           <li class="nav-item">
-            <a class="nav-link" href="testResults.html">Test Results</a>
+            <a class="nav-link" href="index.html">Test Results</a>
           </li>
           <!-- New Analysis -->
           <li class="nav-item">
@@ -57,7 +57,7 @@
       <div class="col-3">Vwe</div>
       <div class="col-9">
         <div class="input-group">
-          <input type="number" class="form-control" step="any">
+          <input type="number" class="form-control" step="any" id="VweInput">
           <span class="input-group-text">V</span>
         </div>
       </div>
@@ -68,14 +68,14 @@
           <div class="col-1 align-center">from</div>
           <div class="col-4">
             <div class="input-group">
-              <input type="number" class="form-control" step="any">
+              <input type="number" class="form-control" step="any" id="VreFromInput">
               <span class="input-group-text">V</span>
             </div>
           </div>
           <div class="col-1 align-center">to</div>
           <div class="col-4">
             <div class="input-group">
-              <input type="number" class="form-control" step="any">
+              <input type="number" class="form-control" step="any" id="VreToInput">
               <span class="input-group-text">V</span>
             </div>
           </div>
@@ -84,32 +84,39 @@
       <!-- Type of Calibration -->
       <div class="col-3">Type of Calibration</div>
       <div class="col-9">
-        <select class="form-select" aria-label="Calibration selection" id="CalType">
+        <select class="form-select" aria-label="Calibration selection" id="calibrationTypeInput">
           <option selected>Select calibration type...</option>
-          <option value="1">Threshold</option>
-          <option value="2">Linear Regression</option>
-          <option value="3">Logistic Regression</option>
+          <option value="Threshold">Threshold</option>
+          <option value="Linear Regression">Linear Regression</option>
+          <option value="Logistic Regression">Logistic Regression</option>
         </select>
       </div>
       <!-- Concentration values -->
       <div class="col-3">Concentration values (e.g. "1e-5, 2e-6, 5e-7")</div>
       <div class="col-9">
-        <input type="number" class="form-control" step="any">
+        <input type="text" class="form-control" step="any" id="concentrationVectorInput">
       </div>
+      <!-- Calcuate button -->
       <div class="col-12 my-5">
         <div class="d-grid">
-          <button class="btn btn-primary" type="button">Calculate</button>
+          <button class="btn btn-primary" type="button" id="calculateBtn">Calculate</button>
         </div>
       </div>
+      <!-- Parameters -->
       <div class="col-3">Parameters</div>
       <div class="col-9">
-        <input class="form-control" type="text" placeholder="-" readonly>
+        <input class="form-control" type="text" placeholder="-" readonly id="parametersField">
       </div>
-      <div class="col-12 my-5">
-        <div class="d-grid">
-          <button class="btn btn-primary" type="button" disabled>Save Analysis</button>
-        </div>
+      <!-- Waiting message -->
+      <div class="col-4 align-right py-5" id="waitingImage" hidden>
+        <img src="images/waiting-circle-fill.svg" class="status-image img-fluid" alt="Successfully saved">
       </div>
+      <div class="col-8 py-5" id="waitingText" hidden>Waiting for parameters to be calculated...</div>
+      <!-- Confirm message -->
+      <div class="col-4 align-right py-5" id="saveConfirmImage" hidden>
+        <img src="images/check-circle-fill.svg" class="status-image img-fluid" alt="Successfully saved">
+      </div>
+      <div class="col-8 py-5" id="saveConfirmText" hidden>Analysis successfully saved. Refresh the page to configure a new analysis.</div>
     </div>
   </div>
 
