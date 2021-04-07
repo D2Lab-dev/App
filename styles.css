@@ -1,0 +1,13 @@
+.logo-img {
+  width: 3rem;
+  margin-right: 1rem;
+}
+
+.test-result-image {
+  width: 30rem;
+}
+
+/* Generic styles */
+.align-center {
+  text-align: center;
+}
