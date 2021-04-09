@@ -49,13 +49,12 @@
       <!-- Device ID -->
       <div class="col-3">C.F.:</div>
       <div class="col-9">
-        <select class="form-select" aria-label="Default select example">
+        <select class="form-select" id="selectCFList">
           <option selected>Select C.F. ...</option>
-          <option value="1">XXXXXXXXXXXXXXXX</option>
         </select>
       </div>
       <div class="col-12">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover" id="resultsTable">
           <thead>
             <tr>
               <th scope="col">Test Number</th>
@@ -63,18 +62,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="element2">
-              <td class="CF">-</td>
-              <td class="result">-</td>
-            </tr>
-            <tr class="element1">
-              <td class="CF">-</td>
-              <td class="result">-</td>
-            </tr>
-            <tr class="element0">
-              <td class="CF">-</td>
-              <td class="result">-</td>
-            </tr>
           </tbody>
         </table>
       </div>

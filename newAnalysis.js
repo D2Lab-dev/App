@@ -1,3 +1,8 @@
+// Syntax that MUST be used to write to field6 (parameters). Variables names (p1, p2, etc.) and numbers can be customized as needed.
+// e.g.:
+// https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field6="{\"p1\":2,\"p2\":5,\"p3\":8}"
+// https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field6="{\"var1\":2,\"p2\":5,\"alice3\":8,\"n15\":10e-2}"
+
 var calculateBtnPressed = false;
 var parametersReady = false;
 
@@ -9,12 +14,22 @@ function checkParameters() {
     .then(response => response.json())
     .then(data => {
       console.log(data.feeds[0].field6);
+      // Check if field6 holds a valid "parameters" value
       if (JSON.parse(data.feeds[0].field6)[0] != "pending") {
-        $("#parametersField").val(JSON.parse(data.feeds[0].field6)[0]);
+        // Pretty print the JSON string held by field6
+        let parametersPrettyPrint = JSON.parse(data.feeds[0].field6);
+        parametersPrettyPrint = parametersPrettyPrint.replace("{",""); // Remove {
+        parametersPrettyPrint = parametersPrettyPrint.replace("}",""); // Remove }
+        parametersPrettyPrint = parametersPrettyPrint.replace(/"/g,""); // Remove all the "
+        parametersPrettyPrint = parametersPrettyPrint.replace(/:/g," = "); // Replace : with =
+        parametersPrettyPrint = parametersPrettyPrint.replace(/,/g,", "); // Add spaces after ,
+        $("#parametersField").val(parametersPrettyPrint);
+        // Show confirmation banner
         $("#waitingImage").prop("hidden", true);
         $("#waitingText").prop("hidden", true);
         $("#saveConfirmImage").prop("hidden", false);
         $("#saveConfirmText").prop("hidden", false);
+        // Signal parameters have been calculated
         parametersReady = true;
       }
     });
