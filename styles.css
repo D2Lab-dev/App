@@ -1,6 +1,24 @@
+.intro-img {
+  width: 10rem;
+  margin-bottom: 3rem;
+}
+
+.banner {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 20px 1px grey;
+  padding: 5rem;
+  margin: 5rem auto;
+  width: 800px;
+}
+
+.card-img-top {
+  width: 6rem;
+}
+
 .logo-img {
   width: 3rem;
-  margin-right: 1rem;
+  margin-right: 2.5rem;
+  float: left;
 }
 
 .test-result-image {
@@ -11,14 +29,46 @@
   width: 3rem;
 }
 
-.nav-item {
-  margin: 0 2rem;
+.nav-link {
+  color: black;
+}
+
+/* Users themes */
+.caregiver-nav {
+  background-color: #cfe2ff;
+}
+
+.caregiver-body {
+  background-color: #f7faff;
+}
+
+.operator-nav {
+  background-color: #fff3cd;
+}
+
+.operator-body {
+  background-color: #fffbf0;
+}
+
+.technical-nav {
+  background-color: #F7D7DA;
+}
+
+.technical-body {
+  background-color: #fcf3f3;
 }
 
 /* Generic styles */
 .align-center {
   text-align: center;
 }
+
 .align-right {
   text-align: right;
+}
+
+.main-tab {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px grey;
+  background-color: white;
 }

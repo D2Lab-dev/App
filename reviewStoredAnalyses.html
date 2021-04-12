@@ -9,43 +9,18 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <!-- Logo -->
-      <img src="images/ui-checks-grid.svg" class="logo-img" alt="Logo image">
-      <!-- Hamburger toggle -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<body class="technical-body">
+  <!-- Technical Navbar -->
+  <div class="container-fluid p-3 technical-nav">
+    <img src="images/ui-checks-grid.svg" class="logo-img" alt="Logo image">
+    <nav class="nav nav-pills">
+      <a class="nav-link" href="newAnalysis.html">New Analysis</a>
+      <a class="nav-link active" href="reviewStoredAnalyses.html">Review Stored Analyses</a>
+      <a class="nav-link" href="index.html">Logout</a>
+    </nav>
+  </div>
 
-      <!-- Menu elements -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!-- Test Results -->
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Test Results</a>
-          </li>
-          <!-- New Analysis -->
-          <li class="nav-item">
-            <a class="nav-link" href="newAnalysis.html">New Analysis</a>
-          </li>
-          <!-- Review Stored Analyses -->
-          <li class="nav-item">
-            <a class="nav-link active" href="reviewStoredAnalyses.html">Review Stored Analyses</a>
-          </li>
-          <!-- Historical Records -->
-          <li class="nav-item">
-            <a class="nav-link" href="history.html">Historical Records</a>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </nav>
-
-  <div class="container pt-5">
+  <div class="container p-5 my-3 main-tab">
     <div class="row g-4 align-items-center">
       <!-- Select Analysis -->
       <div class="col-3">Select Analysis</div>
