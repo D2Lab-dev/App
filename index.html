@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Welocome</title>
+  <title>Welcome</title>
   <link rel="icon" href="images/ui-checks-grid-blue.svg">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
@@ -12,11 +12,26 @@
 <body>
   <div class="container text-center banner">
     <img src="images/ui-checks-grid-color.svg" class="img-fluid intro-img">
-    <h3>Welcome to the Control App.</h3>
-    <p>Select a user profile to start.</p>
+    <h3>Welcome to MoBio Lab.</h3>
 
+    <p class="pt-5">Select a user profile to start.</p>
     <!-- Users tabs -->
-    <div class="row pt-5">
+    <div class="row">
+      <!-- Technician -->
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-header">
+            <h5>Technician</h5>
+          </div>
+          <div class="container mt-2">
+            <img src="images/tools.svg" class="card-img-top">
+          </div>
+          <div class="card-body">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#technicianLogin">Login</button>
+          </div>
+        </div>
+      </div>
+      <!-- Caregiver -->
       <div class="col-md-4">
         <div class="card text-center">
           <div class="card-header">
@@ -26,77 +41,65 @@
             <img src="images/person-fill.svg" class="card-img-top">
           </div>
           <div class="card-body">
-            <a href="testResults.html" class="btn btn-primary">Login as Caregiver</a>
+            <a href="testResults.html" class="btn btn-primary">Login</a>
           </div>
         </div>
       </div>
+      <!-- User -->
       <div class="col-md-4">
         <div class="card text-center">
           <div class="card-header">
-            <h5>Operator</h5>
+            <h5>User</h5>
           </div>
           <div class="container mt-2">
             <img src="images/person-badge.svg" class="card-img-top">
           </div>
           <div class="card-body">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#operatorLogin">Login as Operator</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card text-center">
-          <div class="card-header">
-            <h5>Technical</h5>
-          </div>
-          <div class="container mt-2">
-            <img src="images/tools.svg" class="card-img-top">
-          </div>
-          <div class="card-body">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#technicalLogin">Login as Technical</button>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userLogin">Login</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Operator login popup -->
-    <div class="modal fade" id="operatorLogin" tabindex="-1" aria-labelledby="operatorLogin" aria-hidden="true">
+    <!-- User login popup -->
+    <div class="modal fade" id="userLogin" tabindex="-1" aria-labelledby="userLogin" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Operator login</h5>
+            <h5 class="modal-title" id="exampleModalLabel">User login</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="form-floating mx-5">
-              <input type="password" class="form-control" id="operatorPINInput" placeholder="PIN">
-              <label for="operatorPINInput">PIN</label>
+              <input type="password" class="form-control" id="userPINInput" placeholder="PIN">
+              <label for="userPINInput">PIN</label>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-warning" id="operatorLoginBtn">Login</button>
+            <button type="button" class="btn btn-warning" id="userLoginBtn">Login</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Technical login popup -->
-    <div class="modal fade" id="technicalLogin" tabindex="-1" aria-labelledby="technicalLogin" aria-hidden="true">
+    <!-- Technician login popup -->
+    <div class="modal fade" id="technicianLogin" tabindex="-1" aria-labelledby="technicianLogin" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Technical login</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Technician login</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="form-floating mx-5">
-              <input type="password" class="form-control" id="technicalPINInput" placeholder="PIN">
-              <label for="technicalPINInput">PIN</label>
+              <input type="password" class="form-control" id="technicianPINInput" placeholder="PIN">
+              <label for="technicianPINInput">PIN</label>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" id="technicalLoginBtn">Login</button>
+            <button type="button" class="btn btn-danger" id="technicianLoginBtn">Login</button>
           </div>
         </div>
       </div>
