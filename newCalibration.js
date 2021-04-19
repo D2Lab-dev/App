@@ -17,7 +17,8 @@ function checkParameters() {
       // Check if field6 holds a valid "parameters" value
       if (JSON.parse(data.feeds[0].field8)[0] != "pending") {
         // Pretty print the JSON string held by field6
-        let parametersPrettyPrint = JSON.parse(data.feeds[0].field8);
+        // let parametersPrettyPrint = JSON.parse(data.feeds[0].field8);
+        let parametersPrettyPrint = data.feeds[0].field8;
         parametersPrettyPrint = parametersPrettyPrint.replace("{",""); // Remove {
         parametersPrettyPrint = parametersPrettyPrint.replace("}",""); // Remove }
         parametersPrettyPrint = parametersPrettyPrint.replace(/"/g,""); // Remove all the "
@@ -38,12 +39,6 @@ function checkParameters() {
 
 $("#calculateBtn").click(() => {
   // Get form data
-  const name = $("#analysisNameInput").val();
-  const Vwe = $("#VweInput").val();
-  const Vre = JSON.stringify({
-    from: $("#VreFromInput").val(),
-    to: $("#VreToInput").val()
-  });
   const calibration = $("#calibrationTypeInput").val();
   const concentrationVector = "[" + $("#concentrationVectorInput").val() + "]";
   const parameters = "[\"pending\"]";
@@ -53,6 +48,8 @@ $("#calculateBtn").click(() => {
   fetch(queryString);
   // Set button pressed flag
   calculateBtnPressed = true;
+  $("#saveConfirmImage").prop("hidden", true);
+  $("#saveConfirmText").prop("hidden", true);
   $("#waitingImage").prop("hidden", false);
   $("#waitingText").prop("hidden", false);
 });
