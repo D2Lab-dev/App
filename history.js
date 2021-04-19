@@ -26,6 +26,11 @@ fetch(queryString)
   $("#selectCFList").change(() => {
     // Clear table by removing all "tr" tags of "tbody"
     $("#resultsTable>tbody>tr").remove();
+    $("#resultsTableContainer").removeClass("scroll-table");
+
+    // Clear chart
+    chart.data.labels = [];
+    chart.data.datasets[0].data = [];
 
     // Populate table
     let nEntry = 0;
@@ -33,14 +38,56 @@ fetch(queryString)
       if (test.field3 === $("#selectCFList").val()) {
         // Add entry to the table
         nEntry++;
-        // Convert test result true/false in positive/negative strings
-        let testResult = ""
+        // Convert test result true/false in positive/negative strings and 0/1 numbers
+        let testResult = "";
+        let testResultNum = 0;
         if (test.field4 === "true") {
           testResult = "Positive";
+          testResultNum = 1;
         } else {
           testResult = "Negative";
+          testResultNum = 0;
         }
-        $("#resultsTable>tbody").append("<tr><td>" + nEntry + "</td><td>" + testResult + "</td></tr>");
+        // Pretty print timestamp
+        let timestampPrint = test.created_at;
+        timestampPrint = timestampPrint.replace("T"," "); // Replace "T" with a space
+        timestampPrint = timestampPrint.replace("Z",""); // Remove "Z"
+        $("#resultsTable>tbody").append("<tr><td>" + timestampPrint + "</td><td>" + test.field1 + "</td><td>" + test.field2 + "</td><td>" + testResult + "</td></tr>");
+
+        // Add data to chart
+        chart.data.labels.push(timestampPrint)
+        chart.data.datasets[0].data.push(testResultNum);
       }
     });
+    // Manage scroll trigger
+    if (nEntry > 10) {
+      $("#resultsTableContainer").addClass("scroll-table");
+      $("#resultsTableContainer").css({"height": 10*41 + "px"}); // 10 rows (header + data) of 41 pixels height are shown, the rest is scrollable
+    }
+
+    // Update chart with new values
+    chart.update();
   });
+
+// Draw chart
+var chart = new Chart($("#testResultChart"), {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Test result',
+            data: [],
+            backgroundColor: ['#cfe2ff'],
+            borderColor: ['#0d6efd'],
+            borderWidth: 1,
+            stepped: 'true'
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});

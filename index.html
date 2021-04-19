@@ -38,10 +38,10 @@
             <h5>Caregiver</h5>
           </div>
           <div class="container mt-2">
-            <img src="images/person-fill.svg" class="card-img-top">
+            <img src="images/person-badge.svg" class="card-img-top">
           </div>
           <div class="card-body">
-            <a href="testResults.html" class="btn btn-primary">Login</a>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#caregiverLogin">Login</button>
           </div>
         </div>
       </div>
@@ -52,17 +52,17 @@
             <h5>User</h5>
           </div>
           <div class="container mt-2">
-            <img src="images/person-badge.svg" class="card-img-top">
+            <img src="images/person-fill.svg" class="card-img-top">
           </div>
           <div class="card-body">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userLogin">Login</button>
+            <a href="testResults.html" class="btn btn-primary">Login</a>
           </div>
         </div>
       </div>
     </div>
 
     <!-- User login popup -->
-    <div class="modal fade" id="userLogin" tabindex="-1" aria-labelledby="userLogin" aria-hidden="true">
+    <div class="modal fade" id="caregiverLogin" tabindex="-1" aria-labelledby="caregiverLogin" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -77,7 +77,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-warning" id="userLoginBtn">Login</button>
+            <button type="button" class="btn btn-warning" id="caregiverLoginBtn">Login</button>
           </div>
         </div>
       </div>

@@ -33,6 +33,11 @@
   color: black;
 }
 
+.scroll-table {
+  /* height: 200px; */
+  overflow-y: scroll;
+}
+
 /* Users themes */
 .caregiver-nav {
   background-color: #cfe2ff;
