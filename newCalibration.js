@@ -30,31 +30,38 @@
              let analyses = [];
              data.feeds.forEach(function(feed, i, feeds) {
                // Delete fields not needed for the update of Analyses DB
-               delete feed["created_at"];
-               feed.delta_t = i;
+               // delete feed["created_at"];
+               feed.created_at = new Date;
+               feed.created_at = feed.created_at.valueOf() + i;
+               feed.created_at = feed.created_at.toString();
+               // feed.delta_t = i;
                delete feed["entry_id"];
                // Check if this entry is the one we are working on
                if (feed.field1 === analysis) {
                  // Update with the new parameters
                  feed.field5 = parameters;
+               } else {
+                 feed.field5 = "null";
                }
                // Store entry in the local "analyses" JSON array
                analyses[i] = feed;
              });
              // Delete all data in Analyses DB
              // fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=FVRA63GCX5781VVP", "DELETE")
-             // Write new data
-             let writeData = "{write_api_key: FVRA63GCX5781VVP, updates:" + JSON.stringify(analyses) + "}";
-             console.log(writeData);
+             // Write single analysis. If more than one analysis is enabled, the code must be changed to a bulk write (see the next commented lines)
+             fetch("https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field1=" + analyses[0].field1 + "&field2=" + analyses[0].field2 + "&field3=" + analyses[0].field3 + "&field4=" + analyses[0].field4 + "&field5=" + analyses[0].field5)
 
-             fetch("https://api.thingspeak.com/channels/1311141/bulk_update.json", {
-               method: 'POST',
-               headers: {'Content-Type': 'application/json'},
-               body: writeData
-             });
-
-             console.log(analysis);
-             console.log(analyses);
+             // Write new data in bulk mode (https://it.mathworks.com/help/thingspeak/bulkwritejsondata.html)
+             // let writeData = "{\"write_api_key\": \"FVRA63GCX5781VVP\", \"updates\":" + JSON.stringify(analyses) + "}";
+             // console.log(writeData);
+             //
+             // fetch("https://api.thingspeak.com/channels/1311141/bulk_update.json", {
+             //   method: 'POST',
+             //   // mode: 'no-cors',
+             //   headers: {'Content-Type': 'application/json'},
+             //   body: {writeData}
+             // });
+             // .then(respon
            });
            // Pretty print the JSON string held by field5
            let parametersPrettyPrint = parameters.replace("{", ""); // Remove {
