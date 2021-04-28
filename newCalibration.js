@@ -7,6 +7,8 @@
  var parametersReady = false;
  var acquisitionsReady = false;
 
+ var analysis = "";
+
  function pollDBCalibration() {
 
    // Check if the update is still needed
@@ -16,11 +18,46 @@
        .then(response => response.json())
        .then(data => {
          // Check if field5 holds a valid "parameters" value
-         if (JSON.parse(data.feeds[0].field5)[0] != "pending") {
-           // Pretty print the JSON string held by field6
-           // let parametersPrettyPrint = JSON.parse(data.feeds[0].field8);
-           let parametersPrettyPrint = data.feeds[0].field5;
-           parametersPrettyPrint = parametersPrettyPrint.replace("{", ""); // Remove {
+         if (JSON.parse(data.feeds[0].field5) != null) {
+           // Save parameters in a local variable
+           let parameters = data.feeds[0].field5;
+           // Update Analyses DB with the new parameters
+           fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=100") // Get all data in Analyses DB
+           .then(response => response.json())
+           .then(data => {
+             // Collect downloaded data
+             const feeds = data.feeds;
+             let analyses = [];
+             data.feeds.forEach(function(feed, i, feeds) {
+               // Delete fields not needed for the update of Analyses DB
+               delete feed["created_at"];
+               feed.delta_t = i;
+               delete feed["entry_id"];
+               // Check if this entry is the one we are working on
+               if (feed.field1 === analysis) {
+                 // Update with the new parameters
+                 feed.field5 = parameters;
+               }
+               // Store entry in the local "analyses" JSON array
+               analyses[i] = feed;
+             });
+             // Delete all data in Analyses DB
+             // fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=FVRA63GCX5781VVP", "DELETE")
+             // Write new data
+             let writeData = "{write_api_key: FVRA63GCX5781VVP, updates:" + JSON.stringify(analyses) + "}";
+             console.log(writeData);
+
+             fetch("https://api.thingspeak.com/channels/1311141/bulk_update.json", {
+               method: 'POST',
+               headers: {'Content-Type': 'application/json'},
+               body: writeData
+             });
+
+             console.log(analysis);
+             console.log(analyses);
+           });
+           // Pretty print the JSON string held by field5
+           let parametersPrettyPrint = parameters.replace("{", ""); // Remove {
            parametersPrettyPrint = parametersPrettyPrint.replace("}", ""); // Remove }
            parametersPrettyPrint = parametersPrettyPrint.replace(/"/g, ""); // Remove all the "
            parametersPrettyPrint = parametersPrettyPrint.replace(/:/g, " = "); // Replace : with =
@@ -31,36 +68,42 @@
            $("#waitingText").prop("hidden", true);
            $("#saveConfirmImage").prop("hidden", false);
            $("#saveConfirmText").prop("hidden", false);
-           // Signal parameters have been calculated
+           // Signal that parameters have been calculated
            parametersReady = true;
          }
        });
-   } else if (acquisitionsReady === false) {
+   }
+   if (acquisitionsReady === false) {
      // Get last "acquisitions" value
      fetch("https://api.thingspeak.com/channels/1336115/fields/4?api_key=DKIU4QVAFAC8Z5T3&results=1")
        .then(response => response.json())
        .then(data => {
-         if (JSON.parse(data.feeds[0].field4)[0] != "pending") {
-           // Wait >15 seconds
-           setTimeout(function() {}, 17000);
-           // Rise flag for Thingspeak script execution
-           fetch("https://api.thingspeak.com/update?api_key=H3KZKXZT2XZT47WM&field7=true");
+         console.log(data.feeds[0].field4);
+         if (JSON.parse(data.feeds[0].field4) != null) {
+           // Wait >15 seconds, then set the flag to run the script
+           console.log("timout function start");
+           setTimeout(setRunScriptFlag, 17000);
            acquisitionsReady = true;
          }
        });
    }
  }
 
+ function setRunScriptFlag() {
+   // Rise flag for Thingspeak script execution
+   fetch("https://api.thingspeak.com/update?api_key=H3KZKXZT2XZT47WM&field7=true");
+   console.log("timout function end");
+}
+
  $("#calculateBtn").click(() => {
    // Get form data
    const concentrationVector = "[" + $("#concentrationVectorInput").val() + "]";
    const N_CAL = JSON.parse(concentrationVector).length;
-   const analysis = $("#selectAnalysisList").val();
+   analysis = $("#selectAnalysisList").val();
    const acquisitions = "[\"pending\"]";
    const parameters = "[\"pending\"]";
    // Build Thingspeak HTTP string
-   // const queryString = "https://api.thingspeak.com/update?api_key=SWDE0VGCDPJH2QW3&field7=" + concentrationVector + "&field8=" + parameters;
-   const queryString = "https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field1=" + N_CAL + "&field2=" + analysis + "&field3=" + concentrationVector + "&field4=" + acquisitions + "&field5=" + parameters;
+   const queryString = "https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field1=" + N_CAL + "&field2=" + analysis + "&field3=" + concentrationVector; // + "&field4=" + acquisitions + "&field5=" + parameters;
    // Write data to Thingspeak
    fetch(queryString);
    // Set button pressed flag
