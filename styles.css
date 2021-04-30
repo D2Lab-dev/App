@@ -42,19 +42,19 @@
 }
 
 /* Users themes */
-.caregiver-nav {
+.user-nav {
   background-color: #cfe2ff;
 }
 
-.caregiver-body {
+.user-body {
   background-color: #f7faff;
 }
 
-.operator-nav {
+.caregiver-nav {
   background-color: #fff3cd;
 }
 
-.operator-body {
+.caregiver-body {
   background-color: #fffbf0;
 }
 
