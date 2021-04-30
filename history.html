@@ -23,10 +23,16 @@
   <div class="container pt-5 my-3 main-tab">
     <div class="row g-4 align-items-center">
       <!-- Device ID -->
-      <div class="col-3">C.F.:</div>
+      <div class="col-3">Social Security No:</div>
       <div class="col-9">
         <select class="form-select" id="selectCFList">
-          <option selected>Select C.F. ...</option>
+          <option selected>Select Social Security No ...</option>
+        </select>
+      </div>
+      <div class="col-3">Type of Analysis:</div>
+      <div class="col-9">
+        <select class="form-select" id="selectAnalysisList">
+          <option selected>Select type of analysis ...</option>
         </select>
       </div>
       <div class="col-12" id="resultsTableContainer">
@@ -45,7 +51,7 @@
         </table>
       </div>
       <div class="col-12">
-        <canvas class="my-4 w-100 chartjs-render-monitor" id="testResultChart" width="917" height="387" style="display: block; width: 917px; height: 387px;"></canvas>
+        <canvas class="my-4 w-100 chartjs-render-monitor" id="testResultChart" width="917" height="400" style="display: block; width: 917px; height: 400px;"></canvas>
       </div>
     </div>
   </div>

@@ -21,8 +21,11 @@
   float: left;
 }
 
-.test-result-image {
-  width: 30rem;
+.test-result-image-positive {
+  width: 2rem;
+}
+.test-result-image-negative {
+  width: 2rem;
 }
 
 .status-image {

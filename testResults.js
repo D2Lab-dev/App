@@ -36,15 +36,16 @@ $("#selectDeviceList").change(() => {
     $("#CFField").text(test.CF);
     // Show positive/negative image
     if (test.result === "true") {
-      $(".test-result-image").attr("src", "images/test-positive.svg");
+      $(".test-result-image-positive").attr("src", "images/red-circle-fill.svg");
     } else {
-      $(".test-result-image").attr("src", "images/test-negative.svg");
+      $(".test-result-image-negative").attr("src", "images/green-circle-fill.svg");
     }
   } else {
     // Fill with default values
     $("#typeOfAnalysisField").text("-");
     $("#CFField").text("-");
     $("#resultField").text("-");
-    $(".test-result-image").attr("src", "images/test-clear.svg");
+    $(".test-result-image-positive").attr("src", "images/grey-circle-fill.svg");
+    $(".test-result-image-negative").attr("src", "images/grey-circle-fill.svg");
   }
 });
