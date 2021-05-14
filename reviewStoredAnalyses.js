@@ -1,5 +1,5 @@
 // Globals and constants
-const queryString = "https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=100";
+const queryString = "https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=1";
 var analyses = new Map(); // Create Map object to hold data (acts like a local database)
 
 // Get data from Thingspeak
@@ -30,11 +30,9 @@ $("#selectAnalysisList").change(() => {
     // Show data
     $("#VweField").text(analysis.Vwe + " V");
     $("#VreField").text("from " + analysis.Vre.from + " V to " + analysis.Vre.to + " V");
-    $("#calibrationTypeField").text(analysis.calibration);
   } else {
     // Fill with default values
     $("#VweField").text("- V");
     $("#VreField").text("from - V to - V");
-    $("#calibrationTypeField").text("-");
   }
 });

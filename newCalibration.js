@@ -6,123 +6,215 @@
  var calculateBtnPressed = false;
  var parametersReady = false;
  var acquisitionsReady = false;
+ var newConcentration = false;
 
  var analysis = "";
+ var concentration = "";
+ var N_CAL = 0;
+ var calibrationType = "";
+ var parameters = "";
+
+ var analysisVwe = "";
+ var analysisVre = "";
 
  function pollDBCalibration() {
 
    // Check if the update is still needed
    if (parametersReady === false & calculateBtnPressed === true) {
      // Get last "parameters" value
-     fetch("https://api.thingspeak.com/channels/1336115/fields/5?api_key=DKIU4QVAFAC8Z5T3&results=1")
+     fetch("https://api.thingspeak.com/channels/1336115/fields/6?api_key=DKIU4QVAFAC8Z5T3&results=1")
        .then(response => response.json())
        .then(data => {
-         // Check if field5 holds a valid "parameters" value
-         if (JSON.parse(data.feeds[0].field5) != null) {
+         // Check if field6 holds a valid "parameters" value
+         if (JSON.parse(data.feeds[0].field6) != null) {
            // Save parameters in a local variable
-           let parameters = data.feeds[0].field5;
+           parameters = data.feeds[0].field6;
            // Update Analyses DB with the new parameters
-           fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=100") // Get all data in Analyses DB
-           .then(response => response.json())
-           .then(data => {
-             // Collect downloaded data
-             const feeds = data.feeds;
-             let analyses = [];
-             data.feeds.forEach(function(feed, i, feeds) {
-               // Delete fields not needed for the update of Analyses DB
-               // delete feed["created_at"];
-               feed.created_at = new Date;
-               feed.created_at = feed.created_at.valueOf() + i;
-               feed.created_at = feed.created_at.toString();
-               // feed.delta_t = i;
-               delete feed["entry_id"];
-               // Check if this entry is the one we are working on
-               if (feed.field1 === analysis) {
-                 // Update with the new parameters
-                 feed.field5 = parameters;
-               } else {
-                 feed.field5 = "null";
-               }
-               // Store entry in the local "analyses" JSON array
-               analyses[i] = feed;
+           fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=1") // Get last data of Analyses DB
+             .then(response => response.json())
+             .then(data => {
+               // Save data to be preserved
+               analysisVwe = data.feeds[0].field2;
+               analysisVre = data.feeds[0].field3;
+               // Clear Analyses DB
+               fetch("https://api.thingspeak.com/channels/1311141/feeds.json", {
+                 method: "DELETE",
+                 headers: {
+                   'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({
+                   api_key: '1AW3WC2CLG1FYRZG' // User API key, from "My Profile" section
+                 })
+               });
+               // Signal that parameters have been calculated
+               parametersReady = true;
+               // Wait 15 seconds before writing to avoid Thingspeak limitations
+               setTimeout(updateAnalysesDB, 16000);
              });
-             // Delete all data in Analyses DB
-             // fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=FVRA63GCX5781VVP", "DELETE")
-             // Write single analysis. If more than one analysis is enabled, the code must be changed to a bulk write (see the next commented lines)
-             fetch("https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field1=" + analyses[0].field1 + "&field2=" + analyses[0].field2 + "&field3=" + analyses[0].field3 + "&field4=" + analyses[0].field4 + "&field5=" + analyses[0].field5)
-
-             // Write new data in bulk mode (https://it.mathworks.com/help/thingspeak/bulkwritejsondata.html)
-             // let writeData = "{\"write_api_key\": \"FVRA63GCX5781VVP\", \"updates\":" + JSON.stringify(analyses) + "}";
-             // console.log(writeData);
-             //
-             // fetch("https://api.thingspeak.com/channels/1311141/bulk_update.json", {
-             //   method: 'POST',
-             //   // mode: 'no-cors',
-             //   headers: {'Content-Type': 'application/json'},
-             //   body: {writeData}
-             // });
-             // .then(respon
-           });
-           // Pretty print the JSON string held by field5
-           let parametersPrettyPrint = parameters.replace("{", ""); // Remove {
-           parametersPrettyPrint = parametersPrettyPrint.replace("}", ""); // Remove }
-           parametersPrettyPrint = parametersPrettyPrint.replace(/"/g, ""); // Remove all the "
-           parametersPrettyPrint = parametersPrettyPrint.replace(/:/g, " = "); // Replace : with =
-           parametersPrettyPrint = parametersPrettyPrint.replace(/,/g, ", "); // Add spaces after ,
-           $("#parametersField").val(parametersPrettyPrint);
-           // Show confirmation banner
-           $("#waitingImage").prop("hidden", true);
-           $("#waitingText").prop("hidden", true);
-           $("#saveConfirmImage").prop("hidden", false);
-           $("#saveConfirmText").prop("hidden", false);
-           // Signal that parameters have been calculated
-           parametersReady = true;
          }
        });
    }
-   if (acquisitionsReady === false) {
-     // Get last "acquisitions" value
-     fetch("https://api.thingspeak.com/channels/1336115/fields/4?api_key=DKIU4QVAFAC8Z5T3&results=1")
+
+   // If the system is waiting for an acquisition
+   if (newConcentration === true) {
+     // Poll the calibration DB for a new acquisition
+     fetch("https://api.thingspeak.com/channels/1336115/fields/3?api_key=DKIU4QVAFAC8Z5T3&results=1")
        .then(response => response.json())
        .then(data => {
-         console.log(data.feeds[0].field4);
-         if (JSON.parse(data.feeds[0].field4) != null) {
-           // Wait >15 seconds, then set the flag to run the script
-           console.log("timout function start");
-           setTimeout(setRunScriptFlag, 17000);
-           acquisitionsReady = true;
+         console.log(data);
+         if ((JSON.parse(data.feeds[0].field3) != null)) {
+           // Update the table
+           $("#calibrationTable>tbody").append("<tr><td>" + concentration + "</td><td>" + JSON.parse(data.feeds[0].field3) + "</td></tr>");
+           $("#acquisitionWaitingText").text("Acquisition received, please wait while saving...");
+           newConcentration = false; // Clear flag
+           N_CAL++; // Increment the numer of calibration points
+           // Wait 15 seconds before notifying the successful save to avoid Thingspeak limitations
+           setTimeout(setAcquisitionSuccessfullySaved, 16000);
          }
        });
    }
  }
 
+ function systemStart() {
+    $('#systemWarning').prop("hidden", true);
+    $('#selectAnalysis').prop("hidden", false);
+ }
+
  function setRunScriptFlag() {
    // Rise flag for Thingspeak script execution
    fetch("https://api.thingspeak.com/update?api_key=H3KZKXZT2XZT47WM&field7=true");
-   console.log("timout function end");
-}
+ }
+
+ function writeCustomValue() {
+   // Directly write the custom value in Calibration DB
+   fetch("https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field6={\"threshold\":" + $("#thresholdInput").val() + "}");
+ }
+
+ function setSystemReadyForAcquisition() {
+   $("#acquisitionWarningImage").prop("hidden", true);
+   $("#acquisitionWarningText").prop("hidden", true);
+   $("#acquisitionWaitingImage").prop("hidden", false);
+   $("#acquisitionWaitingText").prop("hidden", false);
+   $("#acquisitionWaitingText").text("System ready, waiting for the acquisition...");
+   newConcentration = true;
+ }
+
+ function setAcquisitionSuccessfullySaved() {
+   // Notify the successfull save
+   $("#acquisitionWaitingImage").prop("hidden", true);
+   $("#acquisitionWaitingText").prop("hidden", true);
+   $("#acquisitionSaveConfirmImage").prop("hidden", false);
+   $("#acquisitionSaveConfirmText").prop("hidden", false);
+ }
+
+ function updateAnalysesDB() {
+   // Write data to Analyses DB
+   fetch("https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field1=" + analysis + "&field2=" + analysisVwe + "&field3=" + analysisVre + "&field4=" + calibrationType + "&field5=" + parameters);
+   // Pretty print the JSON string held by parameters
+   let parametersPrettyPrint = parameters.replace("{", ""); // Remove {
+   parametersPrettyPrint = parametersPrettyPrint.replace("}", ""); // Remove }
+   parametersPrettyPrint = parametersPrettyPrint.replace(/"/g, ""); // Remove all the "
+   parametersPrettyPrint = parametersPrettyPrint.replace(/:/g, " = "); // Replace : with =
+   parametersPrettyPrint = parametersPrettyPrint.replace(/,/g, ", "); // Add spaces after ,
+   $("#parametersField").val(parametersPrettyPrint);
+   // Show confirmation banner
+   $("#calibrationWaitingImage").prop("hidden", true);
+   $("#calibrationWaitingText").prop("hidden", true);
+   $("#calibrationSaveConfirmImage").prop("hidden", false);
+   $("#calibrationSaveConfirmText").prop("hidden", false);
+ }
+
+ $('#selectAnalysisList').change(() => {
+   if ($('#selectAnalysisList').val() === "Select from stored analyses...") {
+     // Hide calibration setup elements
+     $("#calibrationForm").prop("hidden", true);
+   } else {
+     // Show calibration setup elements
+     $("#calibrationForm").prop("hidden", false);
+     analysis = $("#selectAnalysisList").val();
+   }
+ });
+
+ $('#newSampleBtn').click(() => {
+   // Get form data
+   concentration = $("#newConcentrationInput").val();
+   // Build Thingspeak HTTP string
+   const queryString = "https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field1=" + analysis + "&field2=" + concentration;
+   // Write data to Thingspeak
+   fetch(queryString);
+   // Show warning banner
+   $("#acquisitionSaveConfirmImage").prop("hidden", true);
+   $("#acquisitionSaveConfirmText").prop("hidden", true);
+   $("#acquisitionWarningImage").prop("hidden", false);
+   $("#acquisitionWarningText").prop("hidden", false);
+   // Wait 15 seconds to avoid limitations on Thingspeak
+   setTimeout(setSystemReadyForAcquisition, 16000);
+ });
+
+ $('#calibrationTypeInput').change(() => {
+   if ($('#calibrationTypeInput').val() === "Threshold") {
+     // Show manuel threshold option
+     $("#customValueCheckGroup").prop("hidden", false);
+   } else if ($('#calibrationTypeInput').val() === "Select calibration type...") {
+     // Hide all
+     $('#customValueCheckGroup').prop("hidden", true);
+     $('#customValueCheck').prop('checked', false);
+     $("#thresholdInputLabel").prop("hidden", true);
+     $("#thresholdInputGroup").prop("hidden", true);
+   } else {
+     $("#customValueCheckGroup").prop("hidden", true);
+     $('#customValueCheck').prop('checked', false);
+     $("#thresholdInputLabel").prop("hidden", true);
+     $("#thresholdInputGroup").prop("hidden", true);
+   }
+ });
+
+ $('#customValueCheck').change(() => {
+   if ($('#customValueCheck').is(":checked")) {
+     $("#thresholdInputLabel").prop("hidden", false);
+     $("#thresholdInputGroup").prop("hidden", false);
+   } else {
+     $("#thresholdInputLabel").prop("hidden", true);
+     $("#thresholdInputGroup").prop("hidden", true);
+   }
+
+ });
 
  $("#calculateBtn").click(() => {
    // Get form data
-   const concentrationVector = "[" + $("#concentrationVectorInput").val() + "]";
-   const N_CAL = JSON.parse(concentrationVector).length;
-   analysis = $("#selectAnalysisList").val();
-   const acquisitions = "[\"pending\"]";
-   const parameters = "[\"pending\"]";
+   calibrationType = $("#calibrationTypeInput").val();
    // Build Thingspeak HTTP string
-   const queryString = "https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field1=" + N_CAL + "&field2=" + analysis + "&field3=" + concentrationVector; // + "&field4=" + acquisitions + "&field5=" + parameters;
+   const queryString = "https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field5=" + N_CAL + "&field4=" + analysis;
    // Write data to Thingspeak
    fetch(queryString);
    // Set button pressed flag
    calculateBtnPressed = true;
-   $("#saveConfirmImage").prop("hidden", true);
-   $("#saveConfirmText").prop("hidden", true);
-   $("#waitingImage").prop("hidden", false);
-   $("#waitingText").prop("hidden", false);
+   $("#calibrationSaveConfirmImage").prop("hidden", true);
+   $("#calibrationSaveConfirmText").prop("hidden", true);
+   $("#calibrationWaitingImage").prop("hidden", false);
+   $("#calibrationWaitingText").prop("hidden", false);
+   if ($('#customValueCheck').is(":checked")) {
+     // Wait 15 seconds to avoid Thingspeak limitations, then directly write the custom value
+     setTimeout(writeCustomValue, 16000);
+   } else {
+     // Wait 15 seconds to avoid Thingspeak limitations, then trigger the script start
+     setTimeout(setRunScriptFlag, 16000);
+   }
  });
 
- // Get data from Thingspeak
- fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=100")
+ // Clear Calibration DB
+ fetch("https://api.thingspeak.com/channels/1336115/feeds.json", {
+   method: "DELETE",
+   headers: {
+     'Content-Type': 'application/json'
+   },
+   body: JSON.stringify({
+     api_key: '1AW3WC2CLG1FYRZG' // User API key, from "My Profile" section
+   })
+ });
+
+ // Get data from Thingspeak to populate the Analysis selection list
+ fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=1")
    .then(response => response.json())
    .then(data => {
      // Collect downloaded data
@@ -132,6 +224,9 @@
        $("#selectAnalysisList").append(new Option(feed.field1, feed.field1));
      });
    });
+
+ // Wait 15 seconds to avoid Thingspeak limitations
+ setTimeout(systemStart, 16000);
 
  // Poll Thingspeak to check if parameters have been calculated
  setInterval(pollDBCalibration, 2000); // every 2 seconds

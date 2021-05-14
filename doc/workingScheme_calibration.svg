@@ -184,6 +184,20 @@
          d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path916-3-8-0-8" />
     </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-9-22"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path916-3-4" />
+    </marker>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -194,7 +208,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
      inkscape:cx="297.65746"
-     inkscape:cy="802.55041"
+     inkscape:cy="479.30159"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -226,6 +240,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';text-align:end;letter-spacing:1.5875px;word-spacing:0.108479px;text-anchor:end;stroke-width:0.264583"
+       x="83.07917"
+       y="-80.433334"
+       id="text879-3-46"
+       transform="rotate(90)"><tspan
+         sodipodi:role="line"
+         id="tspan877-1-9"
+         x="84.666672"
+         y="-80.433334"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';text-align:end;text-anchor:end;stroke-width:0.264583"
+         dx="3.46">...</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 33.866669,25.400004 v 25.4"
@@ -233,7 +260,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 148.16666,25.400004 V 131.23334"
+       d="m 148.16666,25.400004 1e-5,84.666666"
        id="path833-4"
        sodipodi:nodetypes="cc" />
     <text
@@ -251,12 +278,12 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="160.86667"
-       y="80.628159"
+       y="71.966667"
        id="text879-4"><tspan
          sodipodi:role="line"
          id="tspan877-0"
          x="160.86667"
-         y="80.628159"
+         y="71.966667"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';stroke-width:0.264583">DB Calibration</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
@@ -266,116 +293,97 @@
        xml:space="preserve"
        style="font-size:4.93889px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="67.73333"
-       y="21.16667"
+       y="29.633333"
        id="text879-9"><tspan
          sodipodi:role="line"
-         id="tspan877-9"
          x="67.73333"
-         y="21.16667"
-         style="font-size:4.93889px;stroke-width:0.264583">N_CAL</tspan><tspan
-         sodipodi:role="line"
-         x="67.73333"
-         y="27.340281"
+         y="29.633333"
          style="font-size:4.93889px;stroke-width:0.264583"
          id="tspan1257">Analysis</tspan><tspan
          sodipodi:role="line"
          x="67.73333"
-         y="33.513893"
+         y="35.806946"
          style="font-size:4.93889px;stroke-width:0.264583"
-         id="tspan1259">Concentrations</tspan></text>
+         id="tspan1259">Concentration</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 33.866669,59.26667 V 97.366671"
+       d="m 33.866667,55.033333 0,16.933334"
        id="path833-1"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;stroke-width:0.264583"
-       x="25.400003"
-       y="76.200005"
+       x="25.400002"
+       y="63.5"
        id="text879-3"><tspan
          sodipodi:role="line"
          id="tspan877-1"
-         x="25.400002"
-         y="76.200005"
+         x="25.4"
+         y="63.5"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';text-align:end;text-anchor:end;stroke-width:0.264583">CC3200</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart)"
-       d="M 33.866669,71.96667 H 148.16666"
-       id="path905-3" />
-    <text
-       xml:space="preserve"
-       style="font-size:4.93889px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
-       x="67.73333"
-       y="67.733337"
-       id="text879-9-4"><tspan
-         sodipodi:role="line"
-         x="67.73333"
-         y="67.733337"
-         style="font-size:4.93889px;stroke-width:0.264583"
-         id="tspan1259-9">N_CAL</tspan></text>
-    <path
        style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-9)"
-       d="M 33.866669,88.900001 H 148.16666"
+       d="M 33.866673,63.499996 H 148.16666"
        id="path905-38" />
     <text
        xml:space="preserve"
        style="font-size:4.93889px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="67.73333"
-       y="84.666672"
+       y="59.266666"
        id="text879-9-4-0"><tspan
          sodipodi:role="line"
          x="67.73333"
-         y="84.666672"
+         y="59.266666"
          style="font-size:4.93889px;stroke-width:0.264583"
-         id="tspan1259-9-5">Acquisitions</tspan></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart-6)"
-       d="M 33.866669,118.53334 H 148.16666"
-       id="path905-3-4" />
+         id="tspan1259-9-5">Acquisition</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 33.866669,105.83333 v 25.40001"
+       d="M 33.866669,88.899991 V 114.30001"
        id="path833-1-0"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;stroke-width:0.264583"
        x="25.4"
-       y="118.53334"
+       y="97.366669"
        id="text879-0"><tspan
          sodipodi:role="line"
          id="tspan877-4"
          x="25.4"
-         y="118.53334"
+         y="97.366669"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';text-align:end;text-anchor:end;stroke-width:0.264583">App</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3, 3;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 12.699999,135.46667 H 160.86665"
+       d="M 12.699993,127.00001 H 160.86664"
        id="path833-1-0-6"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="165.10001"
-       y="135.46666"
+       y="127"
        id="text879-4-2"><tspan
          sodipodi:role="line"
          id="tspan877-0-6"
          x="165.10001"
-         y="135.46666"
+         y="127"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI Bold';stroke-width:0.264583">Pause &gt;15 sec</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.93889px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="67.73333"
-       y="114.30001"
+       y="93.133339"
        id="text879-9-4-0-7"><tspan
          sodipodi:role="line"
          x="67.73333"
-         y="114.30001"
+         y="93.133339"
          style="font-size:4.93889px;stroke-width:0.264583"
-         id="tspan1259-9-5-5">Acquisitions</tspan></text>
+         id="tspan1259-9-5-5">N_CAL</tspan><tspan
+         sodipodi:role="line"
+         x="67.73333"
+         y="99.306953"
+         style="font-size:4.93889px;stroke-width:0.264583"
+         id="tspan1201">Calibration Type</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 33.866669,139.69999 V 165.1"
@@ -558,5 +566,25 @@
        d="m 148.16667,262.46667 v 25.40001"
        id="path833-1-0-69-0"
        sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-9-22)"
+       d="M 33.866682,101.6 H 148.16667"
+       id="path905-38-7" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.93889px;line-height:1.25;font-family:'Leelawadee UI';-inkscape-font-specification:'Leelawadee UI';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="16.933332"
+       y="105.83334"
+       id="text879-9-4-0-75"><tspan
+         sodipodi:role="line"
+         x="16.933332"
+         y="105.83334"
+         style="font-size:4.93889px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         id="tspan1259-9-5-4">(Click</tspan><tspan
+         sodipodi:role="line"
+         x="16.933332"
+         y="112.00695"
+         style="font-size:4.93889px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         id="tspan1227">&quot;Calculate&quot;)</tspan></text>
   </g>
 </svg>

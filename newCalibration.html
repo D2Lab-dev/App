@@ -20,41 +20,126 @@
   </div>
 
   <div class="container p-5 my-3 main-tab">
-    <div class="row g-3 align-items-center">
-      <!-- Type of Calibration -->
+
+    <!-- Warning message -->
+    <div class="row g-3 align-items-center" id="systemWarning">
+      <div class="col-12 align-center py-1">
+        <img src="images/exclamation-triangle-fill.svg" class="status-image img-fluid" alt="Warning">
+      </div>
+      <div class="col-12 align-center">System setup, please wait.</div>
+      <div class="col-12 align-center">This operation can take up to 20 seconds.</div>
+    </div>
+
+    <!-- Type of Analysis -->
+    <div class="row g-3 align-items-center" id="selectAnalysis" hidden>
       <div class="col-3">Analysis</div>
       <div class="col-9">
         <select class="form-select" aria-label="Analysis selection" id="selectAnalysisList">
           <option selected>Select from stored analyses...</option>
         </select>
       </div>
-      <!-- Concentration values -->
-      <div class="col-3">Concentration values (e.g. "1e-5, 2e-6, 5e-7")</div>
-      <div class="col-9">
-        <input type="text" class="form-control" step="any" id="concentrationVectorInput">
+    </div>
+
+    <div class="row g-3 align-items-center" id="calibrationForm" hidden>
+      <!-- Acquire New sample -->
+      <div class="col-3 my-5">Concentration Value (e.g. 1e-5)</div>
+      <div class="col-6">
+        <div class="input-group">
+          <input type="number" class="form-control" step="any" id="newConcentrationInput">
+          <span class="input-group-text">M</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="d-grid">
+          <button class="btn btn-primary" type="button" id="newSampleBtn">Acquire New Sample</button>
+        </div>
+      </div>
+      <!-- Warning message -->
+      <div class="col-4 align-right py-5" id="acquisitionWarningImage" hidden>
+        <img src="images/exclamation-triangle-fill.svg" class="status-image img-fluid" alt="Warning">
+      </div>
+      <div class="col-8 py-5" id="acquisitionWarningText" hidden>WARNING: process setup, do not operate on the device.</div>
+      <!-- Waiting message -->
+      <div class="col-4 align-right py-5" id="acquisitionWaitingImage" hidden>
+        <img src="images/waiting-circle-fill.svg" class="status-image img-fluid" alt="Waiting">
+      </div>
+      <div class="col-8 py-5" id="acquisitionWaitingText" hidden>System ready, waiting for the acquisition...</div>
+      <!-- Confirm message -->
+      <div class="col-4 align-right py-5" id="acquisitionSaveConfirmImage" hidden>
+        <img src="images/check-circle-fill.svg" class="status-image img-fluid" alt="Successfully saved">
+      </div>
+      <div class="col-8 py-5" id="acquisitionSaveConfirmText" hidden>Acquition successfully saved! Insert a new concentration or proceed with the calibration.</div>
+      <!-- Table -->
+      <div class="col-3 my-5"></div>
+      <div class="col-6">
+        <table class="table table-striped table-hover" id="calibrationTable">
+          <thead>
+            <tr>
+              <th scope="col">Concentration</th>
+              <th scope="col">Peak</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-3"></div>
+      <!-- Type of Calibration -->
+      <div class="col-3 mt-5">Type of Calibration</div>
+      <div class="col-9 mt-5">
+        <select class="form-select" aria-label="Calibration selection" id="calibrationTypeInput">
+          <option selected>Select calibration type...</option>
+          <option value="Threshold">Threshold</option>
+          <option value="Linear Regression">Linear Regression</option>
+          <option value="Logistic Regression">Logistic Regression</option>
+        </select>
+      </div>
+      <!-- Threshold input -->
+      <div class="col-12">
+        <div class="row g-3 align-items-center">
+          <div class="col-3 form-check" id="customValueCheckGroup" hidden>
+            <input class="form-check-input" type="checkbox" id="customValueCheck">
+            <label class="form-check-label" for="customValueCheck">Use custom value</label>
+          </div>
+          <div class="col-3" id="thresholdInputLabel" hidden>Threshold Value (e.g. 1e-5)</div>
+          <div class="col-6" id="thresholdInputGroup" hidden>
+            <div class="input-group">
+              <input type="number" class="form-control" step="any" id="thresholdInput">
+              <span class="input-group-text">A</span>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- Calcuate button -->
-      <div class="col-12 my-5">
+      <div class="col-6 my-5">
         <div class="d-grid">
           <button class="btn btn-primary" type="button" id="calculateBtn">Calculate</button>
         </div>
       </div>
-      <!-- Parameters -->
-      <div class="col-3">Parameters</div>
-      <div class="col-9">
-        <input class="form-control" type="text" placeholder="-" readonly id="parametersField">
+      <!-- New Calibration button -->
+      <div class="col-6 my-5">
+        <div class="d-grid">
+          <button class="btn btn-primary" type="button" id="newCalilbrationBtn">Start New Calibration</button>
+        </div>
       </div>
 
       <!-- Waiting message -->
-      <div class="col-4 align-right py-5" id="waitingImage" hidden>
-        <img src="images/waiting-circle-fill.svg" class="status-image img-fluid" alt="Successfully saved">
+      <div class="col-4 align-right py-5" id="calibrationWaitingImage" hidden>
+        <img src="images/waiting-circle-fill.svg" class="status-image img-fluid" alt="Watining">
       </div>
-      <div class="col-8 py-5" id="waitingText" hidden>Waiting for parameters to be calculated...</div>
+      <div class="col-8 py-5" id="calibrationWaitingText" hidden>Calibration processing... This may take some time.</div>
       <!-- Confirm message -->
-      <div class="col-4 align-right py-5" id="saveConfirmImage" hidden>
+      <div class="col-4 align-right py-5" id="calibrationSaveConfirmImage" hidden>
         <img src="images/check-circle-fill.svg" class="status-image img-fluid" alt="Successfully saved">
       </div>
-      <div class="col-8 py-5" id="saveConfirmText" hidden>Calibration successfully saved. Refresh the page to perform a new one.</div>
+      <div class="col-8 py-5" id="calibrationSaveConfirmText" hidden>Calibration successfully saved! Refresh the page to setup a new one.</div>
+
+      <!-- Show parameters -->
+      <div class="col-3 my-5">Parameters</div>
+      <div class="col-9">
+        <input type="text" class="form-control" step="any" id="parametersField" disabled>
+      </div>
+
     </div>
   </div>
 
