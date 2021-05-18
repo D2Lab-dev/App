@@ -202,6 +202,11 @@
    }
  });
 
+ $('#newCalilbrationBtn').click(() => {
+   // Refresh page
+   location.reload(true);
+ });
+
  // Clear Calibration DB
  fetch("https://api.thingspeak.com/channels/1336115/feeds.json", {
    method: "DELETE",
