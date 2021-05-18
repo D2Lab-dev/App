@@ -64,7 +64,9 @@
          console.log(data);
          if ((JSON.parse(data.feeds[0].field3) != null)) {
            // Update the table
-           $("#calibrationTable>tbody").append("<tr><td>" + concentration + "</td><td>" + JSON.parse(data.feeds[0].field3) + "</td></tr>");
+           const acquisitionValue = Number(JSON.parse(data.feeds[0].field3));
+           const acquisitionValueExp = acquisitionValue.toExponential();
+           $("#calibrationTable>tbody").append("<tr><td>" + concentration + "</td><td>" + acquisitionValueExp + "</td></tr>");
            $("#acquisitionWaitingText").text("Acquisition received, please wait while saving...");
            newConcentration = false; // Clear flag
            N_CAL++; // Increment the numer of calibration points
@@ -105,6 +107,8 @@
    $("#acquisitionWaitingText").prop("hidden", true);
    $("#acquisitionSaveConfirmImage").prop("hidden", false);
    $("#acquisitionSaveConfirmText").prop("hidden", false);
+   // Enable all other controls
+   disableAllControls(false);
  }
 
  function updateAnalysesDB() {
@@ -122,7 +126,20 @@
    $("#calibrationWaitingText").prop("hidden", true);
    $("#calibrationSaveConfirmImage").prop("hidden", false);
    $("#calibrationSaveConfirmText").prop("hidden", false);
+   // Enable "Start new calibration" button
+   $('#newCalilbrationBtn').prop("disabled", false);
  }
+
+function disableAllControls(val) {
+  $('#selectAnalysisList').prop("disabled", val);
+  $('#newConcentrationInput').prop("disabled", val);
+  $('#calibrationTypeInput').prop("disabled", val);
+  $('#newSampleBtn').prop("disabled", val);
+  $('#calculateBtn').prop("disabled", val);
+  $('#newCalilbrationBtn').prop("disabled", val);
+  $('#customValueCheck').prop("disabled", val);
+  $('#thresholdInput').prop("disabled", val);
+}
 
  $('#selectAnalysisList').change(() => {
    if ($('#selectAnalysisList').val() === "Select from stored analyses...") {
@@ -147,6 +164,8 @@
    $("#acquisitionSaveConfirmText").prop("hidden", true);
    $("#acquisitionWarningImage").prop("hidden", false);
    $("#acquisitionWarningText").prop("hidden", false);
+   // Disable all other controls
+   disableAllControls(true);
    // Wait 15 seconds to avoid limitations on Thingspeak
    setTimeout(setSystemReadyForAcquisition, 16000);
  });
@@ -193,6 +212,8 @@
    $("#calibrationSaveConfirmText").prop("hidden", true);
    $("#calibrationWaitingImage").prop("hidden", false);
    $("#calibrationWaitingText").prop("hidden", false);
+   // Disable all other controls
+   disableAllControls(true);
    if ($('#customValueCheck').is(":checked")) {
      // Wait 15 seconds to avoid Thingspeak limitations, then directly write the custom value
      setTimeout(writeCustomValue, 16000);
