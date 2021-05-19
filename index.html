@@ -17,36 +17,22 @@
     <p class="pt-5">Select a user profile to start.</p>
     <!-- Users tabs -->
     <div class="row">
-      <!-- Technician -->
-      <div class="col-md-4">
+      <!-- Admin -->
+      <div class="col-md-6">
         <div class="card text-center">
           <div class="card-header">
-            <h5>Technician</h5>
+            <h5>Administrator</h5>
           </div>
           <div class="container mt-2">
             <img src="images/tools.svg" class="card-img-top">
           </div>
           <div class="card-body">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#technicianLogin">Login</button>
-          </div>
-        </div>
-      </div>
-      <!-- Caregiver -->
-      <div class="col-md-4">
-        <div class="card text-center">
-          <div class="card-header">
-            <h5>Caregiver</h5>
-          </div>
-          <div class="container mt-2">
-            <img src="images/person-badge.svg" class="card-img-top">
-          </div>
-          <div class="card-body">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#caregiverLogin">Login</button>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#administratorLogin">Login</button>
           </div>
         </div>
       </div>
       <!-- User -->
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="card text-center">
           <div class="card-header">
             <h5>User</h5>
@@ -61,30 +47,8 @@
       </div>
     </div>
 
-    <!-- User login popup -->
-    <div class="modal fade" id="caregiverLogin" tabindex="-1" aria-labelledby="caregiverLogin" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">User login</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-floating mx-5">
-              <input type="password" class="form-control" id="userPINInput" placeholder="PIN">
-              <label for="userPINInput">PIN</label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-warning" id="caregiverLoginBtn">Login</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Technician login popup -->
-    <div class="modal fade" id="technicianLogin" tabindex="-1" aria-labelledby="technicianLogin" aria-hidden="true">
+    <!-- Administrator login popup -->
+    <div class="modal fade" id="administratorLogin" tabindex="-1" aria-labelledby="administratorLogin" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -93,13 +57,13 @@
           </div>
           <div class="modal-body">
             <div class="form-floating mx-5">
-              <input type="password" class="form-control" id="technicianPINInput" placeholder="PIN">
-              <label for="technicianPINInput">PIN</label>
+              <input type="password" class="form-control" id="administratorPINInput" placeholder="PIN">
+              <label for="administratorPINInput">PIN</label>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" id="technicianLoginBtn">Login</button>
+            <button type="button" class="btn btn-warning" id="administratorLoginBtn">Login</button>
           </div>
         </div>
       </div>

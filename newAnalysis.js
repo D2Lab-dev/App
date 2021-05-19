@@ -16,7 +16,8 @@ $("#saveBtn").click(() => {
   const queryString = "https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field1=" + name +
     "&field2=" + Vwe +
     "&field3=" + Vre +
-    "&field5=" + "pending";
+    "&field4=" + calibration +
+    "&field5=" + "NA";
   // Write data to Thingspeak
   fetch(queryString);
 

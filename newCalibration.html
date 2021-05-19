@@ -3,18 +3,20 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Update Calibration</title>
+  <title>Calibration</title>
   <link rel="icon" href="images/ui-checks-grid-blue.svg">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="caregiver-body">
-  <!-- Operator Navbar -->
-  <div class="container-fluid p-3 caregiver-nav">
+<body class="administrator-body">
+  <!-- Administrator Navbar -->
+  <div class="container-fluid p-3 administrator-nav">
     <img src="images/ui-checks-grid.svg" class="logo-img" alt="Logo image">
     <nav class="nav nav-pills">
-      <a class="nav-link active" href="newCalibration.html">New Calibration</a>
+      <a class="nav-link" href="newAnalysis.html">New Analysis</a>
+      <a class="nav-link" href="manageStoredAnalyses.html">Manage Stored Analyses</a>
+      <a class="nav-link active" href="newCalibration.html">Calibration</a>
       <a class="nav-link" href="index.html">Logout</a>
     </nav>
   </div>
@@ -30,17 +32,26 @@
       <div class="col-12 align-center">This operation can take up to 20 seconds.</div>
     </div>
 
-    <!-- Type of Analysis -->
-    <div class="row g-3 align-items-center" id="selectAnalysis" hidden>
-      <div class="col-3">Analysis</div>
-      <div class="col-9">
-        <select class="form-select" aria-label="Analysis selection" id="selectAnalysisList">
-          <option selected>Select from stored analyses...</option>
+    <div class="row g-3 align-items-center" id="calibrationSelection" hidden>
+      <!-- Message -->
+      <div class="col-2"></div>
+      <div class="col-8 align-center">
+        <p>Calibration process for the active analysis <b id="activeAnalysis"></b>, configured with a <b id="activeAnalysisCalibrationType"></b>. If you want to calibrate another analysis, change the active analysis in the "Manage Stored Analysis"
+          section.</p>
+      </div>
+      <div class="col-2"></div>
+      <!-- Calibration process -->
+      <div class="col-3 mt-5 align-center">Calibration Process</div>
+      <div class="col-9 mt-5">
+        <select class="form-select" aria-label="Calibration selection" id="calibrationTypeInput">
+          <option selected>Select calibration process...</option>
+          <option value="Automatic">Automatic</option>
+          <option value="Manual">Manual</option>
         </select>
       </div>
     </div>
 
-    <div class="row g-3 align-items-center" id="calibrationForm" hidden>
+    <div class="row g-3 align-items-center" id="autoCalibrationForm" hidden>
       <!-- Acquire New sample -->
       <div class="col-3 my-5">Concentration Value (e.g. 1e-5)</div>
       <div class="col-6">
@@ -84,36 +95,25 @@
         </table>
       </div>
       <div class="col-3"></div>
-      <!-- Type of Calibration -->
-      <div class="col-3 mt-5">Type of Calibration</div>
-      <div class="col-9 mt-5">
-        <select class="form-select" aria-label="Calibration selection" id="calibrationTypeInput">
-          <option selected>Select calibration type...</option>
-          <option value="Threshold">Threshold</option>
-          <option value="Linear Regression">Linear Regression</option>
-          <option value="Logistic Regression">Logistic Regression</option>
-        </select>
-      </div>
+    </div>
+
+    <div class="row g-3 align-items-center" id="manualCalibrationForm" hidden>
       <!-- Threshold input -->
-      <div class="col-12">
         <div class="row g-3 align-items-center">
-          <div class="col-3 form-check" id="customValueCheckGroup" hidden>
-            <input class="form-check-input" type="checkbox" id="customValueCheck">
-            <label class="form-check-label" for="customValueCheck">Use custom value</label>
-          </div>
-          <div class="col-3" id="thresholdInputLabel" hidden>Threshold Value (e.g. 1e-5)</div>
-          <div class="col-6" id="thresholdInputGroup" hidden>
+          <div class="col-3" id="thresholdInputLabel">Threshold Value (e.g. 1e-5)</div>
+          <div class="col-9" id="thresholdInputGroup">
             <div class="input-group">
               <input type="number" class="form-control" step="any" id="thresholdInput">
               <span class="input-group-text">A</span>
             </div>
           </div>
         </div>
-      </div>
+    </div>
+    <div class="row g-3 align-items-center" id="buttonsForm" hidden>
       <!-- Calcuate button -->
       <div class="col-6 my-5">
         <div class="d-grid">
-          <button class="btn btn-primary" type="button" id="calculateBtn">Calculate</button>
+          <button class="btn btn-primary" type="button" id="calculateBtn">Calculate/Update</button>
         </div>
       </div>
       <!-- New Calibration button -->

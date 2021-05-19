@@ -50,20 +50,12 @@
   background-color: #f7faff;
 }
 
-.caregiver-nav {
+.administrator-nav {
   background-color: #fff3cd;
 }
 
-.caregiver-body {
+.administrator-body {
   background-color: #fffbf0;
-}
-
-.technical-nav {
-  background-color: #F7D7DA;
-}
-
-.technical-body {
-  background-color: #fcf3f3;
 }
 
 /* Generic styles */

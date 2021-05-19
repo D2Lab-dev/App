@@ -1,19 +1,9 @@
-// Caregiver login check
-$("#caregiverLoginBtn").click(() => {
-  if ($("#userPINInput").val() === "0000") {
-    window.location.href = window.location.href.split("index.html")[0] + "newCalibration.html"
-  } else {
-    $("#caregiverLogin").modal('toggle');
-    $("#wrongPIN").modal('toggle');
-  }
-});
-
-// Technician login check
-$("#technicianLoginBtn").click(() => {
-  if ($("#technicianPINInput").val() === "0000") {
+// Administrator login check
+$("#administratorLoginBtn").click(() => {
+  if ($("#administratorPINInput").val() === "0000") {
     window.location.href = window.location.href.split("index.html")[0] + "newAnalysis.html"
   } else {
-    $("#technicianLogin").modal('toggle');
+    $("#administratorLogin").modal('toggle');
     $("#wrongPIN").modal('toggle');
   }
 });

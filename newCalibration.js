@@ -79,7 +79,8 @@
 
  function systemStart() {
     $('#systemWarning').prop("hidden", true);
-    $('#selectAnalysis').prop("hidden", false);
+    // Show calibration setup elements
+    $("#calibrationSelection").prop("hidden", false);
  }
 
  function setRunScriptFlag() {
@@ -141,16 +142,35 @@ function disableAllControls(val) {
   $('#thresholdInput').prop("disabled", val);
 }
 
- $('#selectAnalysisList').change(() => {
-   if ($('#selectAnalysisList').val() === "Select from stored analyses...") {
-     // Hide calibration setup elements
-     $("#calibrationForm").prop("hidden", true);
-   } else {
-     // Show calibration setup elements
-     $("#calibrationForm").prop("hidden", false);
-     analysis = $("#selectAnalysisList").val();
-   }
- });
+$('#calibrationTypeInput').change(() => {
+  if ($('#calibrationTypeInput').val() === "Manual") {
+    // Show manual threshold option
+    $("#autoCalibrationForm").prop("hidden", true);
+    $("#manualCalibrationForm").prop("hidden", false);
+    $("#buttonsForm").prop("hidden", false);
+    $("#customValueCheckGroup").prop("hidden", false);
+    $("#thresholdInputLabel").prop("hidden", false);
+    $("#thresholdInputGroup").prop("hidden", false);
+  } else if ($('#calibrationTypeInput').val() === "Automatic") {
+    // Show automatic threshold option
+    $("#autoCalibrationForm").prop("hidden", false);
+    $("#manualCalibrationForm").prop("hidden", true);
+    $("#buttonsForm").prop("hidden", false);
+    $('#customValueCheckGroup').prop("hidden", false);
+    $('#customValueCheck').prop('checked', false);
+    $("#thresholdInputLabel").prop("hidden", true);
+    $("#thresholdInputGroup").prop("hidden", true);
+  } else {
+    // Hide all
+    $("#autoCalibrationForm").prop("hidden", true);
+    $("#manualCalibrationForm").prop("hidden", true);
+    $("#buttonsForm").prop("hidden", true);
+    $("#customValueCheckGroup").prop("hidden", true);
+    $('#customValueCheck').prop('checked', false);
+    $("#thresholdInputLabel").prop("hidden", true);
+    $("#thresholdInputGroup").prop("hidden", true);
+  }
+});
 
  $('#newSampleBtn').click(() => {
    // Get form data
@@ -168,24 +188,6 @@ function disableAllControls(val) {
    disableAllControls(true);
    // Wait 15 seconds to avoid limitations on Thingspeak
    setTimeout(setSystemReadyForAcquisition, 16000);
- });
-
- $('#calibrationTypeInput').change(() => {
-   if ($('#calibrationTypeInput').val() === "Threshold") {
-     // Show manuel threshold option
-     $("#customValueCheckGroup").prop("hidden", false);
-   } else if ($('#calibrationTypeInput').val() === "Select calibration type...") {
-     // Hide all
-     $('#customValueCheckGroup').prop("hidden", true);
-     $('#customValueCheck').prop('checked', false);
-     $("#thresholdInputLabel").prop("hidden", true);
-     $("#thresholdInputGroup").prop("hidden", true);
-   } else {
-     $("#customValueCheckGroup").prop("hidden", true);
-     $('#customValueCheck').prop('checked', false);
-     $("#thresholdInputLabel").prop("hidden", true);
-     $("#thresholdInputGroup").prop("hidden", true);
-   }
  });
 
  $('#customValueCheck').change(() => {
@@ -244,15 +246,12 @@ function disableAllControls(val) {
    .then(response => response.json())
    .then(data => {
      // Collect downloaded data
-     const feeds = data.feeds;
-     data.feeds.forEach(function(feed, i, feeds) {
-       // Add a new entry in the selection list
-       $("#selectAnalysisList").append(new Option(feed.field1, feed.field1));
-     });
+     $('#activeAnalysis').text(data.feeds[0].field1);
+     $('#activeAnalysisCalibrationType').text(data.feeds[0].field4);
    });
 
  // Wait 15 seconds to avoid Thingspeak limitations
- setTimeout(systemStart, 16000);
+ setTimeout(systemStart, 1000);
 
  // Poll Thingspeak to check if parameters have been calculated
  setInterval(pollDBCalibration, 2000); // every 2 seconds
