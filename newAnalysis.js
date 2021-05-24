@@ -17,11 +17,15 @@ $("#saveBtn").click(() => {
     "&field2=" + Vwe +
     "&field3=" + Vre +
     "&field4=" + calibration +
-    "&field5=" + "NA";
+    "&field5=" + "To be calibrated";
   // Write data to Thingspeak
   fetch(queryString);
 
   $("#saveConfirmImage").prop("hidden", false);
   $("#saveConfirmText").prop("hidden", false);
 
+});
+
+$("#calibrationBtn").click(() => {
+  
 });

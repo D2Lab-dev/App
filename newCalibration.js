@@ -17,6 +17,8 @@
  var analysisVwe = "";
  var analysisVre = "";
 
+ var dataUpload = {}; // Variable holding data to be written back to Analyses DB
+
  function pollDBCalibration() {
 
    // Check if the update is still needed
@@ -29,13 +31,26 @@
          if (JSON.parse(data.feeds[0].field6) != null) {
            // Save parameters in a local variable
            parameters = data.feeds[0].field6;
+           // Init payload to be upladed in bulk
+           dataUpload.write_api_key = "FVRA63GCX5781VVP";
+           dataUpload.updates = [];
            // Update Analyses DB with the new parameters
-           fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=1") // Get last data of Analyses DB
+           fetch("https://api.thingspeak.com/channels/1311141/feeds.json?api_key=14XPPECCU0XV7VCU&results=100") // Get all data of Analyses DB
              .then(response => response.json())
              .then(data => {
-               // Save data to be preserved
-               analysisVwe = data.feeds[0].field2;
-               analysisVre = data.feeds[0].field3;
+               // Save data for the next bulk write of Analyses DB
+               data.feeds.forEach((element, i) => {
+                 delete element["entry_id"]; // Delete field not needed
+                 if (element.field1 === analysis) { // If this is the record on which we are working,
+                   element.field5 = parameters; // Write parameters field of Analyses DB
+                 }
+                 dataUpload.updates[i] = element; // Save entry
+               });
+
+               // // Save data to be preserved
+               // analysisVwe = data.feeds[0].field2;
+               // analysisVre = data.feeds[0].field3;
+
                // Clear Analyses DB
                fetch("https://api.thingspeak.com/channels/1311141/feeds.json", {
                  method: "DELETE",
@@ -78,9 +93,9 @@
  }
 
  function systemStart() {
-    $('#systemWarning').prop("hidden", true);
-    // Show calibration setup elements
-    $("#calibrationSelection").prop("hidden", false);
+   $('#systemWarning').prop("hidden", true);
+   // Show calibration setup elements
+   $("#calibrationSelection").prop("hidden", false);
  }
 
  function setRunScriptFlag() {
@@ -114,7 +129,19 @@
 
  function updateAnalysesDB() {
    // Write data to Analyses DB
-   fetch("https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field1=" + analysis + "&field2=" + analysisVwe + "&field3=" + analysisVre + "&field4=" + calibrationType + "&field5=" + parameters);
+   // fetch("https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field1=" + analysis + "&field2=" + analysisVwe + "&field3=" + analysisVre + "&field4=" + calibrationType + "&field5=" + parameters);
+   fetch("https://api.thingspeak.com/channels/1311141/bulk_update.json", {
+     method: "POST",
+     headers: {
+       'Content-Type': 'application/json'
+     },
+     body: JSON.stringify(dataUpload)
+   })
+     // Console debug
+     .then(response => response.json())
+     .then(data => {
+       console.log(data);
+     });
    // Pretty print the JSON string held by parameters
    let parametersPrettyPrint = parameters.replace("{", ""); // Remove {
    parametersPrettyPrint = parametersPrettyPrint.replace("}", ""); // Remove }
@@ -131,46 +158,46 @@
    $('#newCalilbrationBtn').prop("disabled", false);
  }
 
-function disableAllControls(val) {
-  $('#selectAnalysisList').prop("disabled", val);
-  $('#newConcentrationInput').prop("disabled", val);
-  $('#calibrationTypeInput').prop("disabled", val);
-  $('#newSampleBtn').prop("disabled", val);
-  $('#calculateBtn').prop("disabled", val);
-  $('#newCalilbrationBtn').prop("disabled", val);
-  $('#customValueCheck').prop("disabled", val);
-  $('#thresholdInput').prop("disabled", val);
-}
+ function disableAllControls(val) {
+   $('#selectAnalysisList').prop("disabled", val);
+   $('#newConcentrationInput').prop("disabled", val);
+   $('#calibrationTypeInput').prop("disabled", val);
+   $('#newSampleBtn').prop("disabled", val);
+   $('#calculateBtn').prop("disabled", val);
+   $('#newCalilbrationBtn').prop("disabled", val);
+   $('#customValueCheck').prop("disabled", val);
+   $('#thresholdInput').prop("disabled", val);
+ }
 
-$('#calibrationTypeInput').change(() => {
-  if ($('#calibrationTypeInput').val() === "Manual") {
-    // Show manual threshold option
-    $("#autoCalibrationForm").prop("hidden", true);
-    $("#manualCalibrationForm").prop("hidden", false);
-    $("#buttonsForm").prop("hidden", false);
-    $("#customValueCheckGroup").prop("hidden", false);
-    $("#thresholdInputLabel").prop("hidden", false);
-    $("#thresholdInputGroup").prop("hidden", false);
-  } else if ($('#calibrationTypeInput').val() === "Automatic") {
-    // Show automatic threshold option
-    $("#autoCalibrationForm").prop("hidden", false);
-    $("#manualCalibrationForm").prop("hidden", true);
-    $("#buttonsForm").prop("hidden", false);
-    $('#customValueCheckGroup').prop("hidden", false);
-    $('#customValueCheck').prop('checked', false);
-    $("#thresholdInputLabel").prop("hidden", true);
-    $("#thresholdInputGroup").prop("hidden", true);
-  } else {
-    // Hide all
-    $("#autoCalibrationForm").prop("hidden", true);
-    $("#manualCalibrationForm").prop("hidden", true);
-    $("#buttonsForm").prop("hidden", true);
-    $("#customValueCheckGroup").prop("hidden", true);
-    $('#customValueCheck').prop('checked', false);
-    $("#thresholdInputLabel").prop("hidden", true);
-    $("#thresholdInputGroup").prop("hidden", true);
-  }
-});
+ $('#calibrationTypeInput').change(() => {
+   if ($('#calibrationTypeInput').val() === "Manual") {
+     // Show manual threshold option
+     $("#autoCalibrationForm").prop("hidden", true);
+     $("#manualCalibrationForm").prop("hidden", false);
+     $("#buttonsForm").prop("hidden", false);
+     $("#customValueCheckGroup").prop("hidden", false);
+     $("#thresholdInputLabel").prop("hidden", false);
+     $("#thresholdInputGroup").prop("hidden", false);
+   } else if ($('#calibrationTypeInput').val() === "Automatic") {
+     // Show automatic threshold option
+     $("#autoCalibrationForm").prop("hidden", false);
+     $("#manualCalibrationForm").prop("hidden", true);
+     $("#buttonsForm").prop("hidden", false);
+     $('#customValueCheckGroup').prop("hidden", false);
+     $('#customValueCheck').prop('checked', false);
+     $("#thresholdInputLabel").prop("hidden", true);
+     $("#thresholdInputGroup").prop("hidden", true);
+   } else {
+     // Hide all
+     $("#autoCalibrationForm").prop("hidden", true);
+     $("#manualCalibrationForm").prop("hidden", true);
+     $("#buttonsForm").prop("hidden", true);
+     $("#customValueCheckGroup").prop("hidden", true);
+     $('#customValueCheck').prop('checked', false);
+     $("#thresholdInputLabel").prop("hidden", true);
+     $("#thresholdInputGroup").prop("hidden", true);
+   }
+ });
 
  $('#newSampleBtn').click(() => {
    // Get form data
@@ -202,8 +229,6 @@ $('#calibrationTypeInput').change(() => {
  });
 
  $("#calculateBtn").click(() => {
-   // Get form data
-   calibrationType = $("#calibrationTypeInput").val();
    // Build Thingspeak HTTP string
    const queryString = "https://api.thingspeak.com/update?api_key=RHYL0DV01O1AMQ4Q&field5=" + N_CAL + "&field4=" + analysis;
    // Write data to Thingspeak
@@ -216,10 +241,10 @@ $('#calibrationTypeInput').change(() => {
    $("#calibrationWaitingText").prop("hidden", false);
    // Disable all other controls
    disableAllControls(true);
-   if ($('#customValueCheck').is(":checked")) {
+   if ($("#calibrationTypeInput").val() === "Manual") { // Manual calibration
      // Wait 15 seconds to avoid Thingspeak limitations, then directly write the custom value
      setTimeout(writeCustomValue, 16000);
-   } else {
+   } else { // Automatic calibration
      // Wait 15 seconds to avoid Thingspeak limitations, then trigger the script start
      setTimeout(setRunScriptFlag, 16000);
    }
@@ -246,8 +271,10 @@ $('#calibrationTypeInput').change(() => {
    .then(response => response.json())
    .then(data => {
      // Collect downloaded data
-     $('#activeAnalysis').text(data.feeds[0].field1);
-     $('#activeAnalysisCalibrationType').text(data.feeds[0].field4);
+     analysis = data.feeds[0].field1;
+     $('#activeAnalysis').text(analysis);
+     calibrationType = data.feeds[0].field4;
+     $('#activeAnalysisCalibrationType').text(calibrationType);
    });
 
  // Wait 15 seconds to avoid Thingspeak limitations

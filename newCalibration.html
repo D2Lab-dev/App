@@ -14,8 +14,8 @@
   <div class="container-fluid p-3 administrator-nav">
     <img src="images/ui-checks-grid.svg" class="logo-img" alt="Logo image">
     <nav class="nav nav-pills">
+      <a class="nav-link" href="overview.html">Overview</a>
       <a class="nav-link" href="newAnalysis.html">New Analysis</a>
-      <a class="nav-link" href="manageStoredAnalyses.html">Manage Stored Analyses</a>
       <a class="nav-link active" href="newCalibration.html">Calibration</a>
       <a class="nav-link" href="index.html">Logout</a>
     </nav>
@@ -36,8 +36,8 @@
       <!-- Message -->
       <div class="col-2"></div>
       <div class="col-8 align-center">
-        <p>Calibration process for the active analysis <b id="activeAnalysis"></b>, configured with a <b id="activeAnalysisCalibrationType"></b>. If you want to calibrate another analysis, change the active analysis in the "Manage Stored Analysis"
-          section.</p>
+        <p>Calibration process for the active analysis <b id="activeAnalysis"></b>, configured with a <b id="activeAnalysisCalibrationType"></b>. If you want to calibrate a different analysis, change the active one in the <a href="overview.html">Overview</a>
+          page.</p>
       </div>
       <div class="col-2"></div>
       <!-- Calibration process -->
@@ -86,8 +86,8 @@
         <table class="table table-striped table-hover" id="calibrationTable">
           <thead>
             <tr>
-              <th scope="col">Concentration</th>
-              <th scope="col">Peak</th>
+              <th scope="col">Concentration [M]</th>
+              <th scope="col">Current Peak [A]</th>
             </tr>
           </thead>
           <tbody>
