@@ -278,7 +278,7 @@
    });
 
  // Wait 15 seconds to avoid Thingspeak limitations
- setTimeout(systemStart, 1000);
+ setTimeout(systemStart, 16000);
 
  // Poll Thingspeak to check if parameters have been calculated
  setInterval(pollDBCalibration, 2000); // every 2 seconds
