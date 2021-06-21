@@ -104,6 +104,7 @@ fetch(queryString)
         Vwe: feed.field2,
         Vre: JSON.parse(feed.field3),
         calibration: feed.field4,
+        N_MIN: feed.field6,
         parameters: feed.field5,
         isLast: isLast,
       });
@@ -126,13 +127,13 @@ fetch(queryString)
         // Check if calibration has alredy be done
         if (analysis.parameters === "To be calibrated") {
           // Link the "Calibrate" word to the calibration page
-          $("#analysesTable>tbody").append("<tr><td><b>" + analysisName + " (in use)</b></td><td><b>" + analysis.Vwe + "</b></td><td><b>" + analysis.Vre.from + ", " + analysis.Vre.to + "</b></td><td><b>" + analysis.calibration + "</b></td><td><b><a href=\"newCalibration.html\">" + parametersPrettyPrint + "</a></b></td></tr>");
+          $("#analysesTable>tbody").append("<tr><td><b>" + analysisName + " (in use)</b></td><td><b>" + analysis.Vwe + "</b></td><td><b>" + analysis.Vre.from + ", " + analysis.Vre.to + "</b></td><td><b>" + analysis.calibration + "</b></td><td><b>" + analysis.N_MIN + "</b></td><td><b><a href=\"newCalibration.html\">" + parametersPrettyPrint + "</a></b></td></tr>");
         } else {
-          $("#analysesTable>tbody").append("<tr><td><b>" + analysisName + " (in use)</b></td><td><b>" + analysis.Vwe + "</b></td><td><b>" + analysis.Vre.from + ", " + analysis.Vre.to + "</b></td><td><b>" + analysis.calibration + "</b></td><td><b>" + parametersPrettyPrint + "</b></td></tr>");
+          $("#analysesTable>tbody").append("<tr><td><b>" + analysisName + " (in use)</b></td><td><b>" + analysis.Vwe + "</b></td><td><b>" + analysis.Vre.from + ", " + analysis.Vre.to + "</b></td><td><b>" + analysis.calibration + "</b></td><td><b>" + analysis.N_MIN + "</b></td><td><b>" + parametersPrettyPrint + "</b></td></tr>");
         }
       } else {
         // Not used by the device, write line in normal
-        $("#analysesTable>tbody").append("<tr><td>" + analysisName + "</td><td>" + analysis.Vwe + "</td><td>" + analysis.Vre.from + ", " + analysis.Vre.to + "</td><td>" + analysis.calibration + "</td><td>" + parametersPrettyPrint + "</td></tr>");
+        $("#analysesTable>tbody").append("<tr><td>" + analysisName + "</td><td>" + analysis.Vwe + "</td><td>" + analysis.Vre.from + ", " + analysis.Vre.to + "</td><td>" + analysis.calibration + "</b></td><td><b>" + analysis.N_MIN + "</td><td>" + parametersPrettyPrint + "</td></tr>");
       }
     });
   });
