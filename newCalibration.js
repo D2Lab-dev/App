@@ -100,7 +100,8 @@
 
  function setRunScriptFlag() {
    // Rise flag for Thingspeak script execution
-   fetch("https://api.thingspeak.com/update?api_key=H3KZKXZT2XZT47WM&field7=true");
+   fetch("https://api.thingspeak.com/update?api_key=H3KZKXZT2XZT47WM&field7=" + calibrationType);
+   // console.log(calibrationType);
  }
 
  function writeCustomValue() {
