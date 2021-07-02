@@ -133,7 +133,7 @@ fetch(queryString)
         }
       } else {
         // Not used by the device, write line in normal
-        $("#analysesTable>tbody").append("<tr><td>" + analysisName + "</td><td>" + analysis.Vwe + "</td><td>" + analysis.Vre.from + ", " + analysis.Vre.to + "</td><td>" + analysis.calibration + "</b></td><td><b>" + analysis.N_MIN + "</td><td>" + parametersPrettyPrint + "</td></tr>");
+        $("#analysesTable>tbody").append("<tr><td>" + analysisName + "</td><td>" + analysis.Vwe + "</td><td>" + analysis.Vre.from + ", " + analysis.Vre.to + "</td><td>" + analysis.calibration + "</b></td><td>" + analysis.N_MIN + "</td><td>" + parametersPrettyPrint + "</td></tr>");
       }
     });
   });
