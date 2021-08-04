@@ -1,13 +1,8 @@
-// Syntax that MUST be used to write to field6 (parameters). Variables names (p1, p2, etc.) and numbers can be customized as needed.
-// e.g.:
-// https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field6="{\"p1\":2,\"p2\":5,\"p3\":8}"
-// https://api.thingspeak.com/update?api_key=FVRA63GCX5781VVP&field6="{\"var1\":2,\"p2\":5,\"alice3\":8,\"n15\":10e-2}"
-
-$("#saveBtn").click(() => {
-  // Get form data
+$("#saveBtn").click(() => { // "Save Changes" button pressed
+  // Save form data to variables
   const name = $("#analysisNameInput").val();
   const Vwe = $("#VweInput").val();
-  const Vre = JSON.stringify({
+  const Vre = JSON.stringify({ // Convert to JSON string
     from: $("#VreFromInput").val(),
     to: $("#VreToInput").val()
   });
@@ -22,12 +17,7 @@ $("#saveBtn").click(() => {
     "&field6=" + N_MIN;
   // Write data to Thingspeak
   fetch(queryString);
-
+  // Show confirm banner
   $("#saveConfirmImage").prop("hidden", false);
   $("#saveConfirmText").prop("hidden", false);
-
-});
-
-$("#calibrationBtn").click(() => {
-
 });

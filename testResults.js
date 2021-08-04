@@ -3,16 +3,15 @@ const queryString = "https://api.thingspeak.com/channels/814496/feeds.json?api_k
 var tests = new Map(); // Create Map object to hold data (acts like a local database)
 
 function pollResultsUpdate() {
-  // Get data from Thingspeak
+  // Get data from "calibrazione dispositivo" Thingspeak channel
   fetch(queryString)
   .then(response => response.json())
   .then(data => {
     // Collect downloaded data using "DeviceID" as the key value
-    const feeds = data.feeds;
-    data.feeds.forEach(function(feed, i, feeds) {
+    data.feeds.forEach(function(feed, i, feeds) { // Loop through data.feeds elements
       // If the DeviceID field is not "null"
       if (feed.field5 != null) {
-        // Add a new entry in the selection list if this is a new one
+        // Add a new entry to the selection list (if not already there)
         if (!tests.has(feed.field5)) {
           $("#selectDeviceList").append(new Option(feed.field5, feed.field5));
         }
@@ -26,6 +25,7 @@ function pollResultsUpdate() {
       }
     });
   });
+  // Update page data
   updateResult();
 }
 
@@ -33,20 +33,22 @@ function updateResult() {
   // Check if the selection exists inside "tests"
   if (tests.has($("#selectDeviceList").val())) {
     // Retrieve test data
-    let test = tests.get($("#selectDeviceList").val());
+    let test = tests.get($("#selectDeviceList").val()); // Get selected device ID
     // Show data
     // Pretty print timestamp
-    let timestampPrint = test.timestamp;
+    let timestampPrint = test.timestamp; // Temporary timestamp string variable
     timestampPrint = timestampPrint.replace("T"," "); // Replace "T" with a space
     timestampPrint = timestampPrint.replace("Z",""); // Remove "Z"
     $("#timestampField").text(timestampPrint);
-    $("#typeOfAnalysisField").text(test.typeOfAnalysis);
-    $("#CFField").text(test.CF);
-    // Show positive/negative image
+    $("#typeOfAnalysisField").text(test.typeOfAnalysis); // Fill analysis type
+    $("#CFField").text(test.CF); // Fill CF
+    // Show positive/negative image based on test.result value
     if (test.result === "true") {
+      // Positive circle green, negative circle grey
       $(".test-result-image-positive").attr("src", "images/red-circle-fill.svg");
       $(".test-result-image-negative").attr("src", "images/grey-circle-fill.svg");
     } else {
+      // Positive circle grey, negative circle red
       $(".test-result-image-positive").attr("src", "images/grey-circle-fill.svg");
       $(".test-result-image-negative").attr("src", "images/green-circle-fill.svg");
     }
@@ -61,9 +63,16 @@ function updateResult() {
   }
 }
 
-// Act on the selection list
+/**********************************************************/
+/*      Executed on "Device ID" dropdown menu change      */
+/**********************************************************/
 $("#selectDeviceList").change(() => {
+  // Force a result update
   updateResult();
 });
 
-setInterval(pollResultsUpdate, 2000);
+/**********************************************************/
+/*               Executed at page load                    */
+/**********************************************************/
+// Poll Thingspeak to always have updated data
+setInterval(pollResultsUpdate, 2000); // Repeat the call to pollResultsUpdate function every 2 seconds
